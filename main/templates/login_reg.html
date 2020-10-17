@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wishing App</title>
+</head>
+<body>
+        <h1>Welcome! Sign in to manage your jobs!</h1>
+    <ul class="errors">
+        {% for message in messages %}
+        <li><p>{{ message }}</p></li>
+        {% endfor %}
+    </ul>
+            <h3>Register</h3>
+            <form action="/create_user" method="post">
+                {% csrf_token %}
+                    <label>First Name</label>
+                    <input type="text" name="first_name" id="first_name"><br>
+                    <label>Last Name</label>
+                    <input type="text" name="last_name" id="last_name"><br>
+                    <label>Email</label>
+                    <input type="text" name="email" id="email"><br>
+                    <label>Password</label>
+                    <input type="password" name="password" id="password"><br>
+                    <label>Confirm PW</label>
+                    <input type="password" name="pw_confirm" id="password"><br>
+                <button>Register</button>
+            </form>
+            <h3>Login</h3>
+            <form action="/login" method="post">
+                {% csrf_token %}
+                    <label>Email</label>
+                    <input type="text" name="email" id="email"><br>
+                    <label>Password</label>
+                    <input type="password" name="password" id="password"><br>
+                <button>Login</button>
+            </form>
+</body>
+</html>

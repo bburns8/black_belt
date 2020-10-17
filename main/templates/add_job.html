@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Job</title>
+</head>
+<body>
+        <h2>Hello {{ current_user.first_name }}! Create a Job!</h2>
+            <a href="/logout">Logout</a>
+
+    <ul class="errors">
+        {% for message in messages %}
+        <li><p>{{ message }}</p></li>
+        {% endfor %}
+    </ul>
+        <h3>New Job:</h3>
+        <form action="/create" method="POST">
+            {% csrf_token %}
+                <label>Title:</label>
+                <input type="text" name="title" id="title"><br>
+                <label>Description:</label>
+                <textarea name="description" cols="50" rows="7"></textarea><br>
+                <label>Location:</label>
+                <input type="text" name="location" id="location">
+                <label>Category:</label><br>
+                <ul>
+                    {% for category in category_options %}
+                    <li><input type="checkbox" name="category" value="{{category.id}}">{{category.category}}</li>
+                    {% endfor %}
+                    <li>Other: <input type="text" name="category_text"></li>
+                </ul>
+            <a href="/dashboard" class="button">Cancel</a>
+            <button>Submit</button>
+        </form>
+</body>
+</html>

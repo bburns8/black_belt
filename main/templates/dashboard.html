@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handy Helper Dashboard</title>
+</head>
+<body>
+        <h2>Hello {{ current_user.first_name }}!</h2>
+            <a href="/add">New job!</a> | <a href="/logout">Logout</a>
+    <ul class="errors">
+        {% for message in messages %}
+        <li><p>{{ message }}</p></li>
+        {% endfor %}
+    </ul>
+        <h3>Everyone's Jobs:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Job</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in all_jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.location }}</td>
+                    <td>
+                        <a href="/jobs/{{job.id}}">View</a>
+                        {% if job.created_by_user == current_user %}
+                        | <a href="/jobs/{{job.id}}/delete">Remove</a>
+                        | <a href="/jobs/{{job.id}}/edit">Edit</a>
+                        {% endif %}
+                        | <a href="/jobs/{{job.id}}/add_to_user">Add</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>{{ current_user.first_name }}'s Jobs:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Job</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in users_added_jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>
+                        <a href="/jobs/{{job.id}}">View</a>
+                        | <a href="/jobs/{{job.id}}/done">Done</a>
+                        | <a href="/jobs/{{job.id}}/remove_from_user">Give Up</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</body>
+</html>

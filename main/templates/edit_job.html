@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Job</title>
+</head>
+<body>
+        <h2>Hello {{ current_user.first_name }}! Let's edit your job!</h2>
+            <a href="/logout">Logout</a>
+    <ul class="errors">
+        {% for message in messages %}
+        <li><p>{{ message }}</p></li>
+        {% endfor %}
+    </ul>
+
+        <h3>Edit Job:</h3>
+        <form action="/jobs/{{current_job.id}}/update" method="POST">
+            {% csrf_token %}
+                <label>Title:</label>
+                <input type="text" name="title" value="{{ current_job.title }}"><br>
+                <label>Description:</label>
+                <textarea name="description" cols="50" rows="7" value="{{ current_job.description }}">{{ current_job.description }}</textarea><br>
+                <label>Location:</label>
+                <input type="text" name="location" value="{{ current_job.location }}"><br>
+                <label>Category:</label>
+                <ul>
+                    {% for category in all_categories %}
+                        {% if category in current_job.categories.all %}
+                        <li><input type="checkbox" name="category" value="{{category.id}}">{{category.category}}</li>
+                        {% endif %}
+                        {% if category not in current_job.categories.all %}
+                        <li><input type="checkbox" name="category" value="{{category.id}}">{{category.category}}</li>
+                        {% endif %}
+                    {% endfor %}
+                    <li>Other: <input type="text" name="category_text"></li>
+                </ul>
+            <a href="/dashboard" class="button">Cancel</a>
+            <button>Submit</button>
+        </form>
+</body>
+</html>
